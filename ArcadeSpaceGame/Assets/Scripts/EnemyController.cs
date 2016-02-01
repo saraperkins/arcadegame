@@ -12,7 +12,8 @@ public class EnemyController : MonoBehaviour {
 	private bool isHit;
 
 	private Rigidbody rb;
-
+    private bool nux = false;
+    private int nuxoll = 1;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
@@ -20,10 +21,11 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	void Update () {
-		if (isHit) {
-			transform.position -= new Vector3(pushBack,0,0);
-			isHit = false;
-		}
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            nux = !nux;
+            nuxoll =  1 - nuxoll;
+        }
 	}
 
 	// Update is called once per frame
@@ -39,7 +41,7 @@ public class EnemyController : MonoBehaviour {
 			mov = Vector3.forward;
 		}
 
-		mov = (mov * speed) + new Vector3(catchup,0,0);
+		mov = (mov * speed) + new Vector3(catchup * nuxoll,0,0);
 
 		rb.AddForce (mov);
 	}
@@ -51,7 +53,11 @@ public class EnemyController : MonoBehaviour {
 
 		Instantiate (explosion, transform.position, transform.rotation);
 		Destroy (other.gameObject);
-        isHit = true;
+
+        if (!nux)
+        {
+            transform.position -= new Vector3(pushBack, 0, 0);
+        }
 
 		//gameObject.transform.position.x -= pushback;
 		//gameObject.transform.position.x = transform.position * Vector3.left * pushback;

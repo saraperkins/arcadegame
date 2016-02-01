@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿/*
+
+using UnityEngine;
 using System.Collections;
 
 [System.Serializable]
@@ -9,7 +11,8 @@ public class Boundary {
 public class PlayerController : MonoBehaviour {
 
 	public float pushBack;
-	private bool isHit;
+	private bool hitByLBall;
+    private float LBallTime = 0;
 
 	private Rigidbody rb;
 	private AudioSource audioSource;
@@ -59,15 +62,27 @@ public class PlayerController : MonoBehaviour {
 		/*if (isHit) {
 			transform.position -= new Vector3(pushBack,0,0);
 			isHit = false;
-		}//*/
+		}//
 	}
 
 	void FixedUpdate () {
 		//float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
 
-		Vector3 movement = new Vector3 (/*moveHorizontal*/ 0.0f, 0.0f, moveVertical);
-		rb.velocity = movement * speed;
+		Vector3 movement = new Vector3 (/*moveHorizontal*//* 0.0f, 0.0f, moveVertical); 
+
+
+        if (LBallTime > 0)
+        {
+            movement = -1 * movement;
+            LBallTime -= Time.deltaTime;
+        }
+        else
+        {
+            LBallTime = 0;
+        }
+        
+        rb.velocity = movement * speed;
 
 		rb.position = new Vector3 
 			(
@@ -109,6 +124,12 @@ public class PlayerController : MonoBehaviour {
 			gameController.GameOver ();
 		}
 
+        if (other.tag == "LBall")
+        {
+            hitByLBall = true;
+            LBallTime += 5;
+        }
+
         if (this.tag == "Player" && other.tag == "gunDisabler")
         {
             if (canShoot)
@@ -135,3 +156,4 @@ public class PlayerController : MonoBehaviour {
 
     public int GetSpins() { return spin; }
 }
+*/

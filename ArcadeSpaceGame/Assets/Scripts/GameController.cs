@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
     //these are phillip's
@@ -14,7 +15,12 @@ public class GameController : MonoBehaviour {
     public string spinString;
 
 	public GUIText restartText;
-	public GUIText gameOverText;
+
+	public GameObject gameOverText;
+    public GameObject Background;
+    public GameObject JailImage;
+    public GameObject GameOverScore;
+    public GameObject GameRestart;
 
 	private bool gameOver;
 	private bool restart;
@@ -23,7 +29,6 @@ public class GameController : MonoBehaviour {
 		gameOver = false;
 		restart = false;
 		restartText.text = "";
-		gameOverText.text = "";
 		score = 0;
 		UpdateScore ();
         UpdateSpins();
@@ -43,13 +48,14 @@ public class GameController : MonoBehaviour {
 
 	void Update () {
 		if (restart) {
-			if (Input.GetKeyDown (KeyCode.R)) {
-				Application.LoadLevel (Application.loadedLevel);
+			if (Input.GetKeyDown (KeyCode.R))
+            {
+                Application.LoadLevel (Application.loadedLevel);
 			}
 		}
 		if (gameOver) {
-			restartText.text = "Press 'R' for Restart";
-			restart = true;
+			//restartText.text = "Press 'R' for Restart";
+			//restart = true;
 
 		}
 
@@ -82,7 +88,22 @@ public class GameController : MonoBehaviour {
     }
 
 	public void GameOver () {
-		gameOverText.text = "Game Over!";
+		//gameOverText.text = "Game Over!";
 		gameOver = true;
+        StartCoroutine(doGameOver());
 	}
+
+    IEnumerator doGameOver()
+    {
+        Background.SetActive(true);
+        yield return new WaitForSeconds(2);
+        JailImage.SetActive(true);
+        gameOverText.SetActive(true);
+        yield return new WaitForSeconds(1);
+        GameOverScore.GetComponent<Text>().text = "Score: " + score;
+        GameOverScore.SetActive(true);
+        yield return new WaitForSeconds(1);
+        GameRestart.SetActive(true);
+        restart = true;
+    }
 }
