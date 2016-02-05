@@ -6,6 +6,8 @@ public class GameController : MonoBehaviour {
     //these are phillip's
 	public int mult;
     public PlayerController player;
+    public EnemyController enemy;
+
     //end phillip
 
 	public GUIText scoreText;
@@ -53,6 +55,10 @@ public class GameController : MonoBehaviour {
                 Application.LoadLevel (Application.loadedLevel);
 			}
 		}
+        if(player.transform.position.x < enemy.transform.position.x)
+        {
+            GameOver();
+        }
 		if (gameOver) {
 			//restartText.text = "Press 'R' for Restart";
 			//restart = true;

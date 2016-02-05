@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour {
     public float gunTimeout;
     private float gunRestart;
 
+    private int toPush;
+
 
 	void Start () {
 		rb = GetComponent<Rigidbody>();
@@ -83,6 +85,12 @@ public class PlayerController : MonoBehaviour {
 
         rb.velocity = movement * speed;
 
+        if (toPush > 0)
+        {
+            toPush--;
+            transform.position += new Vector3(0.1f, 0, 0);
+        }
+
 		rb.position = new Vector3 
 			(
 				Mathf.Clamp (rb.position.x, boundary.xMin, boundary.xMax), 
@@ -111,8 +119,15 @@ public class PlayerController : MonoBehaviour {
 			return;
 		}
 
-		//Instantiate (explosion, transform.position, transform.rotation);
-		Destroy (other.gameObject);
+        if (other.tag == "Bolt")
+        {
+            Instantiate(explosion, transform.position, transform.rotation);
+        }
+
+        if (other.tag != "Indes")
+        {
+            Destroy(other.gameObject);
+        }
         //isHit = true;
 
         //gameObject.transform.position.x -= pushback;
@@ -129,7 +144,7 @@ public class PlayerController : MonoBehaviour {
             LBallTime += 5;
         }
 
-        if (other.tag == "gunDisabler")
+        else if (other.tag == "gunDisabler")
         {
             if (canShoot)
             {
@@ -149,7 +164,8 @@ public class PlayerController : MonoBehaviour {
         }
         else if(other.tag == "Gas")
         {
-            transform.position += new Vector3(pushBack, 0, 0);
+            //transform.position += new Vector3(pushBack, 0, 0);
+            toPush += (int)(10 * pushBack);
         }
         else
         {

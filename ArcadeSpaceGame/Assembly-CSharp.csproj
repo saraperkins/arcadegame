@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Phillip&apos;s New Things\Electricity\Scripts\LightningBolt.cs" />
-     <Compile Include="Assets\Phillip&apos;s New Things\update these folders\PlayerControllerV2.0.cs" />
      <Compile Include="Assets\Scripts\AsteroidWallCreate.cs" />
      <Compile Include="Assets\Scripts\BG_Scroller.cs" />
      <Compile Include="Assets\Scripts\DestroyByBoundary.cs" />
@@ -56,9 +55,11 @@
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\Mover.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\PlayerControllerV2.0.cs" />
      <Compile Include="Assets\Scripts\RandomRotator.cs" />
      <Compile Include="Assets\Scripts\ShotMover.cs" />
      <Compile Include="Assets\Scripts\Spawn.cs" />
+     <Compile Include="Assets\Scripts\SpawnV2.cs" />
      <Compile Include="Assets\Scripts\Spinner.cs" />
      <Compile Include="Assets\Scripts\UnshootableContact.cs" />
      <None Include="Assets\Phillip&apos;s New Things\Electricity\Shaders\lightning.shader" />
