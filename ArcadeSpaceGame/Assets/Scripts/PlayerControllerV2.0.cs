@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour {
     private float gunRestart;
 
     private int toPush;
+    private bool shieldActive;
 
 
 	void Start () {
@@ -50,6 +51,8 @@ public class PlayerController : MonoBehaviour {
 		if (gameController == null) {
 			Debug.Log ("Cannot find 'GameController' script");
 		}
+
+        shieldActive = false;
 	}
 
 	void Update () {
@@ -134,11 +137,11 @@ public class PlayerController : MonoBehaviour {
         //gameObject.transform.position.x = transform.position * Vector3.left * pushback;
         //Destroy (gameObject);
 
-		if (other.tag == "Enemy") {
+        if (other.tag == "Enemy") {
 			gameController.GameOver ();
 		}
 
-        if (other.tag == "LBall")
+        else if (other.tag == "LBall")
         {
             hitByLBall = true;
             LBallTime += 5;
@@ -166,6 +169,16 @@ public class PlayerController : MonoBehaviour {
         {
             //transform.position += new Vector3(pushBack, 0, 0);
             toPush += (int)(10 * pushBack);
+        }
+        else if (other.tag == "Shield" && !shieldActive)
+        {
+            this.transform.GetChild(2).gameObject.SetActive(true);
+            shieldActive = true;
+        }
+        else if ((other.tag != "Shield" || other.tag != "Gas" || other.tag != "spin") && shieldActive)
+        {
+            this.transform.GetChild(2).gameObject.SetActive(false);
+            shieldActive = false;
         }
         else
         {
