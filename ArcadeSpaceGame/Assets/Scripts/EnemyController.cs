@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour {
     private int spin = 0;
     private float rotation = 0;
     private float rotOffset = 2;
+    private bool shieldActive;
 
     //debug mode
     private bool debug = false;
@@ -40,6 +41,9 @@ public class EnemyController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
+
+        //initialize sheildActive to false
+        shieldActive = false;
 
         //firstShot takes longer
         nextFire = firstShot;
@@ -183,6 +187,16 @@ public class EnemyController : MonoBehaviour {
         else if (other.tag == "Gas")
         {
             transform.position += new Vector3(pushBack, 0, 0);
+        }
+        else if (other.tag == "Shield" && !shieldActive)
+        {
+            this.transform.GetChild(1).gameObject.SetActive(true);
+            shieldActive = true;
+        }
+        else if ((other.tag != "Shield" || other.tag != "Gas" || other.tag != "spin") && shieldActive)
+        {
+            this.transform.GetChild(1).gameObject.SetActive(false);
+            shieldActive = false;
         }
 
         else if (!nux) //check nux mode after effect is activated
